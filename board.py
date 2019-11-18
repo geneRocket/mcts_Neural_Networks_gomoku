@@ -2,9 +2,9 @@
 
 class Board():
     def __init__(self):
-        self.nrow=3
-        self.ncol=3
-        self.n_chess=3
+        self.nrow=7
+        self.ncol=7
+        self.n_chess=5
         self.board=[ [0] * self.ncol for i in range(self.nrow)]
         self.next_player=1;
         self.last_move=None
