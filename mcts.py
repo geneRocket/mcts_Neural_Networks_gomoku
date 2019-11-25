@@ -96,6 +96,8 @@ class MCTS():
 
                 if (win_player != None):
                     node.update_recursive(1)
+                else:
+                    node.update_recursive(0)
                 break
 
             available_pos = board.available_pos()
@@ -106,20 +108,29 @@ class MCTS():
             #node.board.print_board()
             #print("")
 
+class Player():
 
-def get_action(board):
-    node = Node(None)
-    mcts = MCTS(node)
-    for i in range(3000):
-        mcts.simulate(copy.deepcopy(board))
-    print([mcts.root.childs[key].visit_count  for key in mcts.root.childs])
-    print([(mcts.root.childs[key].q+1)/2 for key in mcts.root.childs])
-    return mcts.root.get_max_q_action()
+    def get_action(self,board):
+        node = Node(None)
+        mcts = MCTS(node)
+        for i in range(6000):
+            mcts.simulate(copy.deepcopy(board))
+
+        viscount_sum = 0
+        for key in mcts.root.childs:
+            viscount_sum += mcts.root.childs[key].visit_count
+        print(viscount_sum, "aaa")
+
+        print([mcts.root.childs[key].visit_count /viscount_sum for key in mcts.root.childs])
+        print([(mcts.root.childs[key].q+1)/2 for key in mcts.root.childs])
+        return mcts.root.get_max_q_action()
 
 
 
 
-
-
+from game import Game
+player=Player()
+game=Game(player)
+game.human_play()
 
 

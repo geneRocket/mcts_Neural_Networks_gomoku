@@ -1,11 +1,14 @@
-
+import copy
+import numpy as np
+np.set_printoptions(precision=0)
 
 class Board():
     def __init__(self):
-        self.nrow=7
-        self.ncol=7
-        self.n_chess=5
-        self.board=[ [0] * self.ncol for i in range(self.nrow)]
+        self.nrow=3
+        self.ncol=3
+        self.n_chess=3
+        #self.board=[ [0] * self.ncol for i in range(self.nrow)]
+        self.board=np.zeros((self.nrow,self.ncol))
         self.next_player=1;
         self.last_move=None
 
@@ -80,10 +83,24 @@ class Board():
                 if(self.board[i][j]==0):
                     print("_ ",end='')
                 else:
-                    print(self.board[i][j],end=' ')
+                    print(int(self.board[i][j]),end=' ')
             print("")
 
     def available_pos(self):
         return self.available_pos_list
 
+    def turn_board(self,board):
+        for i in range(self.nrow):
+            for j in range(self.ncol):
+                if(board[i][j]==1):
+                    board[i][j]=2
+                elif(board[i][j]==2):
+                    board[i][j]=1
+
+
+    def get_same_next_player_board(self):
+        ret_board=copy.deepcopy(self.board)
+        if(self.next_player!=1):
+            self.turn_board(ret_board)
+        return ret_board
 
